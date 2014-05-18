@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Vector;
+
 import javax.swing.JPanel;
 
 public class Board extends JPanel { 
@@ -15,6 +17,12 @@ public class Board extends JPanel {
     private final int RIGHT_COLLISION = 2;
     private final int TOP_COLLISION = 3;
     private final int BOTTOM_COLLISION = 4;
+    
+    private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
+    private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
+    
+    private Vector<Integer> moveHistoryBaggX = new Vector<Integer>();
+    private Vector<Integer> moveHistoryBaggY = new Vector<Integer>();
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
     private ArrayList<Baggage> baggs = new ArrayList<Baggage>();
@@ -134,7 +142,8 @@ public class Board extends JPanel {
 
     class TAdapter extends KeyAdapter {
 
-        @Override
+
+		@Override
         public void keyPressed(KeyEvent e) {
 
             if (completed) {
@@ -156,6 +165,9 @@ public class Board extends JPanel {
                 }
 
                 soko.move(-SPACE, 0);
+                
+                moveHistorySokoX.add(SPACE);
+                moveHistorySokoY.add(0);
 
             } else if (key == KeyEvent.VK_RIGHT) {
 
@@ -169,6 +181,9 @@ public class Board extends JPanel {
                 }
 
                 soko.move(SPACE, 0);
+                
+                moveHistorySokoX.add(- SPACE);
+                moveHistorySokoY.add(0);
 
             } else if (key == KeyEvent.VK_UP) {
 
@@ -182,6 +197,9 @@ public class Board extends JPanel {
                 }
 
                 soko.move(0, -SPACE);
+                
+                moveHistorySokoX.add(0);
+                moveHistorySokoY.add(SPACE);
 
             } else if (key == KeyEvent.VK_DOWN) {
 
@@ -195,14 +213,32 @@ public class Board extends JPanel {
                 }
 
                 soko.move(0, SPACE);
+                
+                moveHistorySokoX.add(0);
+                moveHistorySokoY.add(-SPACE);
 
+            } else if (key == KeyEvent.VK_U) {
+                
+            	undoLastMove();
+            
             } else if (key == KeyEvent.VK_R) {
-                restartLevel();
+                
+            	restartLevel();
             }
 
             repaint();
         }
     }
+    
+    public void undoLastMove()
+  	{
+  		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
+  		{
+  			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
+  					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
+  			
+  		}
+  	}
 
     private boolean checkWallCollision(Actor actor, int type) {
 
@@ -271,9 +307,17 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(-SPACE, 0);
+                    
+                    moveHistoryBaggX.add(SPACE);
+                    moveHistoryBaggY.add(0);
+                    
                     isCompleted();
                 }
             }
+            
+            moveHistoryBaggX.add(0);
+            moveHistoryBaggY.add(0);
+            
             return false;
 
         } else if (type == RIGHT_COLLISION) {
@@ -296,9 +340,17 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(SPACE, 0);
+                    
+                    moveHistoryBaggX.add(-SPACE);
+                    moveHistoryBaggY.add(0);
+                    
                     isCompleted();                   
                 }
             }
+            
+            moveHistoryBaggX.add(0);
+            moveHistoryBaggY.add(0);
+            
             return false;
 
         } else if (type == TOP_COLLISION) {
@@ -321,9 +373,16 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(0, -SPACE);
+                    
+                    moveHistoryBaggX.add(0);
+                    moveHistoryBaggY.add(SPACE);
+                    
                     isCompleted();
                 }
             }
+            
+            moveHistoryBaggX.add(0);
+            moveHistoryBaggY.add(0);
 
             return false;
 
@@ -347,13 +406,25 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(0, SPACE);
+                    
+                    moveHistoryBaggX.add(0);
+                    moveHistoryBaggY.add(-SPACE);
+                    
                     isCompleted();
                 }
             }
         }
 
+        moveHistoryBaggX.add(0);
+        moveHistoryBaggY.add(0);
+        
         return false;
     }
+  
+    private void undoBaggMove(int type) { 
+       
+    }
+   
 
     public void isCompleted() {
 
