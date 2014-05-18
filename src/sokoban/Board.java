@@ -16,9 +16,9 @@ public class Board extends JPanel {
     private final int TOP_COLLISION = 3;
     private final int BOTTOM_COLLISION = 4;
 
-    private ArrayList walls = new ArrayList();
-    private ArrayList baggs = new ArrayList();
-    private ArrayList areas = new ArrayList();
+    private ArrayList<Wall> walls = new ArrayList<Wall>();
+    private ArrayList<Baggage> baggs = new ArrayList<Baggage>();
+    private ArrayList<Area> areas = new ArrayList<Area>();
     private Player soko;
     private int w = 0;
     private int h = 0;
@@ -101,7 +101,7 @@ public class Board extends JPanel {
         g.setColor(new Color(250, 240, 170));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        ArrayList world = new ArrayList();
+        ArrayList<Actor> world = new ArrayList<Actor>();
         world.addAll(walls);
         world.addAll(areas);
         world.addAll(baggs);
