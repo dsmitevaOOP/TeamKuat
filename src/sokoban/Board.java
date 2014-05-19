@@ -234,9 +234,9 @@ public class Board extends JPanel {
   		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
   		{
   			
-  			//if (checkBagCollision(LEFT_COLLISION)) {
+  			if (checkBagCollision(LEFT_COLLISION)) {
   				undoBaggMove(LEFT_COLLISION);
-			//}
+			}
   			
   			//if (checkBagCollision(RIGHT_COLLISION)) {
   				undoBaggMove(RIGHT_COLLISION);
