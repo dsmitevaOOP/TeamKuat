@@ -233,14 +233,23 @@ public class Board extends JPanel {
   	{
   		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
   		{
+  			
+  			//if (checkBagCollision(LEFT_COLLISION)) {
   				undoBaggMove(LEFT_COLLISION);
+			//}
+  			
+  			//if (checkBagCollision(RIGHT_COLLISION)) {
   				undoBaggMove(RIGHT_COLLISION);
+			//}
+  			
+  			//if (checkBagCollision(TOP_COLLISION)) {
   				undoBaggMove(TOP_COLLISION);
+			//}
+  			
+  			//if (checkBagCollision(BOTTOM_COLLISION)) {
   				undoBaggMove(BOTTOM_COLLISION);
-			
-  			
-  			
-  			
+			//}
+  				
   			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
   					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
   			
@@ -315,15 +324,9 @@ public class Board extends JPanel {
                     }
                     bag.move(-SPACE, 0);
                     
-                    moveHistoryBaggX.add(SPACE);
-                    moveHistoryBaggY.add(0);
-                    
                     isCompleted();
                 }
             }
-            
-            moveHistoryBaggX.add(0);
-            moveHistoryBaggY.add(0);
             
             return false;
 
@@ -348,16 +351,10 @@ public class Board extends JPanel {
                     }
                     bag.move(SPACE, 0);
                     
-                    moveHistoryBaggX.add(-SPACE);
-                    moveHistoryBaggY.add(0);
-                    
                     isCompleted();                   
                 }
             }
-            
-            moveHistoryBaggX.add(0);
-            moveHistoryBaggY.add(0);
-            
+          
             return false;
 
         } else if (type == TOP_COLLISION) {
@@ -380,17 +377,11 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(0, -SPACE);
-                    
-                    moveHistoryBaggX.add(0);
-                    moveHistoryBaggY.add(SPACE);
-                    
+                  
                     isCompleted();
                 }
             }
             
-            moveHistoryBaggX.add(0);
-            moveHistoryBaggY.add(0);
-
             return false;
 
         } else if (type == BOTTOM_COLLISION) {
@@ -413,17 +404,11 @@ public class Board extends JPanel {
                         }
                     }
                     bag.move(0, SPACE);
-                    
-                    moveHistoryBaggX.add(0);
-                    moveHistoryBaggY.add(-SPACE);
-                    
+                  
                     isCompleted();
                 }
             }
         }
-
-        moveHistoryBaggX.add(0);
-        moveHistoryBaggY.add(0);
         
         return false;
     }
