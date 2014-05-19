@@ -441,11 +441,7 @@ public class Board extends JPanel {
 
                     for (int j=0; j < baggs.size(); j++) {
                         Baggage item = (Baggage) baggs.get(j);
-                        if (!bag.equals(item)) {
-                            if (bag.isLeftCollision(item)) {
-                                return;
-                            }
-                        }
+                       
                         
                     }
                     bag.move(SPACE, 0);
@@ -466,11 +462,7 @@ public class Board extends JPanel {
                     for (int j=0; j < baggs.size(); j++) {
 
                         Baggage item = (Baggage) baggs.get(j);
-                        if (!bag.equals(item)) {
-                            if (bag.isRightCollision(item)) {
-                                return;
-                            }
-                        }
+                       
                        
                     }
                     bag.move(-SPACE, 0);
@@ -490,11 +482,7 @@ public class Board extends JPanel {
                     for (int j = 0; j < baggs.size(); j++) {
 
                         Baggage item = (Baggage) baggs.get(j);
-                        if (!bag.equals(item)) {
-                            if (bag.isTopCollision(item)) {
-                                return;
-                            }
-                        }
+                        
                        
                     }
                     bag.move(0, SPACE);
@@ -514,11 +502,7 @@ public class Board extends JPanel {
                     for (int j = 0; j < baggs.size(); j++) {
 
                         Baggage item = (Baggage) baggs.get(j);
-                        if (!bag.equals(item)) {
-                            if (bag.isBottomCollision(item)) {
-                                return;
-                            }
-                        }
+                        
                         
                     }
                     bag.move(0, -SPACE);
