@@ -474,8 +474,7 @@ public class Board extends JPanel {
                     
                     
                 }
-            }
-            
+            }   
             
 
         } else if (type == BOTTOM_COLLISION) {

@@ -23,7 +23,6 @@ public final class Sokoban extends JFrame {
     }
 
     public static void main(String[] args) {
-    	System.out.print("NAD");
         Sokoban sokoban = new Sokoban();
         sokoban.setVisible(true);
     }
