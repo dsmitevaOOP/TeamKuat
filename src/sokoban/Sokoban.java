@@ -21,9 +21,9 @@ public final class Sokoban extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Sokoban");
     }
-a
-wwwew
+
     public static void main(String[] args) {
+    	System.out.print("NAD");
         Sokoban sokoban = new Sokoban();
         sokoban.setVisible(true);
     }
