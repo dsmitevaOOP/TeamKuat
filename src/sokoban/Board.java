@@ -218,7 +218,6 @@ public class Board extends JPanel {
                 moveHistorySokoY.add(-SPACE);
 
             } else if (key == KeyEvent.VK_U) {
-                
             	undoLastMove();
             
             } else if (key == KeyEvent.VK_R) {
@@ -234,6 +233,14 @@ public class Board extends JPanel {
   	{
   		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
   		{
+  				undoBaggMove(LEFT_COLLISION);
+  				undoBaggMove(RIGHT_COLLISION);
+  				undoBaggMove(TOP_COLLISION);
+  				undoBaggMove(BOTTOM_COLLISION);
+			
+  			
+  			
+  			
   			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
   					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
   			
@@ -421,8 +428,105 @@ public class Board extends JPanel {
         return false;
     }
   
-    private void undoBaggMove(int type) { 
-       
+
+
+    private void undoBaggMove(int type) {
+
+        if (type == LEFT_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isLeftCollision(bag)) {
+
+                    for (int j=0; j < baggs.size(); j++) {
+                        Baggage item = (Baggage) baggs.get(j);
+                        if (!bag.equals(item)) {
+                            if (bag.isLeftCollision(item)) {
+                                return;
+                            }
+                        }
+                        
+                    }
+                    bag.move(SPACE, 0);
+                    
+                   
+                }
+            }
+            
+            
+            
+
+        } else if (type == RIGHT_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isRightCollision(bag)) {
+                    for (int j=0; j < baggs.size(); j++) {
+
+                        Baggage item = (Baggage) baggs.get(j);
+                        if (!bag.equals(item)) {
+                            if (bag.isRightCollision(item)) {
+                                return;
+                            }
+                        }
+                       
+                    }
+                    bag.move(-SPACE, 0);
+                    
+                                     
+                }
+            }
+            
+            
+
+        } else if (type == TOP_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isTopCollision(bag)) {
+                    for (int j = 0; j < baggs.size(); j++) {
+
+                        Baggage item = (Baggage) baggs.get(j);
+                        if (!bag.equals(item)) {
+                            if (bag.isTopCollision(item)) {
+                                return;
+                            }
+                        }
+                       
+                    }
+                    bag.move(0, SPACE);
+                    
+                    
+                }
+            }
+            
+            
+
+        } else if (type == BOTTOM_COLLISION) {
+        
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isBottomCollision(bag)) {
+                    for (int j = 0; j < baggs.size(); j++) {
+
+                        Baggage item = (Baggage) baggs.get(j);
+                        if (!bag.equals(item)) {
+                            if (bag.isBottomCollision(item)) {
+                                return;
+                            }
+                        }
+                        
+                    }
+                    bag.move(0, -SPACE);
+                    
+                    
+                }
+            }
+        }   
     }
    
 
