@@ -29,7 +29,7 @@ public class levels {
 		 
 		 public static String level3 =
 			 "        ########\n"
-		    +"        #     @#\n"
+		        +"        #     @#\n"
 			+"        # $#$ ##\n"
 			+"        # $  $#\n"
 			+"        ##$ $ #\n"
