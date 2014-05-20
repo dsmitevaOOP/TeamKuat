@@ -36,18 +36,8 @@ public class Board extends JPanel {
     private int h = 0;
     private boolean completed = false;
     
-    private String level =
-              "    ######\n"
-            + "    ##   #\n"
-            + "    ##$  #\n"
-            + "  ####  $##\n"
-            + "  ##  $ $ #\n"
-            + "#### # ## #   ######\n"
-            + "##   # ## #####  ..#\n"
-            + "## $  $          ..#\n"
-            + "###### ### #@##  ..#\n"
-            + "    ##     #########\n"
-            + "    ########\n";
+    private String level = levels.level1;
+           
 
     public Board() {
 
@@ -585,4 +575,26 @@ public class Board extends JPanel {
             completed = false;
         }
     }
+    
+    public String nextLevel(String s) {
+		if (level == levels.level1) {
+			level = levels.level2;
+		} else if (level == levels.level2) {
+			level = levels.level3;
+		} else if (level == levels.level3) {
+			level = levels.level4;
+		} else if (level == levels.level4) {
+			level = levels.level5;
+		} else if (level == levels.level5) {
+			level = levels.level6;
+		} else if (level == levels.level6) {
+			level = levels.level7;
+		} else if (level == levels.level7) {
+			level = levels.level8;
+		} else if (level == levels.level8) {
+			level = levels.level9;
+		}
+		return level;
+	}
+
 }
