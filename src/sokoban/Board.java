@@ -23,7 +23,9 @@ public class Board extends JPanel {
     private final int top = 3;  
     private final int bottom = 4;
     
-    private final int undoNumber = 100000;
+    private final int undoNumber = 10;
+    
+    private boolean madeMove = false;
     
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
@@ -163,6 +165,7 @@ public class Board extends JPanel {
                 }
 
                 soko.move(-SPACE, 0);
+                madeMove = true;
                 
                 moveHistorySokoX.add(SPACE);
                 moveHistorySokoY.add(0);
@@ -180,6 +183,7 @@ public class Board extends JPanel {
                 }
 
                 soko.move(SPACE, 0);
+                madeMove = true;
                 
                 moveHistorySokoX.add(- SPACE);
                 moveHistorySokoY.add(0);
@@ -197,6 +201,7 @@ public class Board extends JPanel {
                 }
 
                 soko.move(0, -SPACE);
+                madeMove = true;
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(SPACE);
@@ -214,14 +219,16 @@ public class Board extends JPanel {
                 }
 
                 soko.move(0, SPACE);
+                madeMove = true;
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(-SPACE);
                 Direction.add(bottom);
 
             } else if (key == KeyEvent.VK_U) {
-            	if (undo < undoNumber) {
+            	if (undo < undoNumber && madeMove) {
             		
+            		madeMove = false;
             		undoLastMove();
                 	undo++;
 				}
