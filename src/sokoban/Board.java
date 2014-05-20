@@ -26,9 +26,6 @@ public class Board extends JPanel {
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
     
-    private Vector<Integer> moveHistoryBaggX = new Vector<Integer>();
-    private Vector<Integer> moveHistoryBaggY = new Vector<Integer>();
-    
     private Vector<Integer> Direction = new Vector<Integer>();
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
@@ -233,7 +230,12 @@ public class Board extends JPanel {
             
             } else if (key == KeyEvent.VK_R) {
                 
-            	restartLevel();
+             moveHistorySokoX = new Vector<Integer>();
+             moveHistorySokoY = new Vector<Integer>();
+                
+             Direction = new Vector<Integer>();
+             
+             restartLevel();
             }
 
             repaint();
