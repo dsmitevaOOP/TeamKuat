@@ -18,11 +18,18 @@ public class Board extends JPanel {
     private final int TOP_COLLISION = 3;
     private final int BOTTOM_COLLISION = 4;
     
+    private final int left = 1;
+    private final int right = 2;
+    private final int top = 3;  
+    private final int bottom = 4;
+    
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
     
     private Vector<Integer> moveHistoryBaggX = new Vector<Integer>();
     private Vector<Integer> moveHistoryBaggY = new Vector<Integer>();
+    
+    private Vector<Integer> Direction = new Vector<Integer>();
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
     private ArrayList<Baggage> baggs = new ArrayList<Baggage>();
@@ -168,6 +175,7 @@ public class Board extends JPanel {
                 
                 moveHistorySokoX.add(SPACE);
                 moveHistorySokoY.add(0);
+                Direction.add(left);
 
             } else if (key == KeyEvent.VK_RIGHT) {
 
@@ -184,6 +192,7 @@ public class Board extends JPanel {
                 
                 moveHistorySokoX.add(- SPACE);
                 moveHistorySokoY.add(0);
+                Direction.add(right);
 
             } else if (key == KeyEvent.VK_UP) {
 
@@ -200,6 +209,7 @@ public class Board extends JPanel {
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(SPACE);
+                Direction.add(top);
 
             } else if (key == KeyEvent.VK_DOWN) {
 
@@ -216,6 +226,7 @@ public class Board extends JPanel {
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(-SPACE);
+                Direction.add(bottom);
 
             } else if (key == KeyEvent.VK_U) {
             	undoLastMove();
@@ -234,21 +245,25 @@ public class Board extends JPanel {
   		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
   		{
   			
-  			if (checkBagCollision(LEFT_COLLISION)) {
+  			if ((Direction.elementAt(Direction.size() - 1) == left)) {
+  				
   				undoBaggMove(LEFT_COLLISION);
 			}
   			
-  			//if (checkBagCollision(RIGHT_COLLISION)) {
+  			if ((Direction.elementAt(Direction.size() - 1) == right)) {
+  				
   				undoBaggMove(RIGHT_COLLISION);
-			//}
+			}
   			
-  			//if (checkBagCollision(TOP_COLLISION)) {
+  			if ((Direction.elementAt(Direction.size() - 1) == top)) {
+  				
   				undoBaggMove(TOP_COLLISION);
-			//}
+			}
   			
-  			//if (checkBagCollision(BOTTOM_COLLISION)) {
+  			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
+  				
   				undoBaggMove(BOTTOM_COLLISION);
-			//}
+			}
   				
   			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
   					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
@@ -443,13 +458,13 @@ public class Board extends JPanel {
             for (int i = 0; i < baggs.size(); i++) {
 
                 Baggage bag = (Baggage) baggs.get(i);
-                if (soko.isRightCollision(bag)) {
+               if (soko.isRightCollision(bag)) {
                     for (int j=0; j < baggs.size(); j++) {
 
                         Baggage item = (Baggage) baggs.get(j);
                        
                        
-                    }
+                   }
                     bag.move(-SPACE, 0);
                     
                                      
