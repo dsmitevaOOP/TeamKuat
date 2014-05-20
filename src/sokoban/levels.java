@@ -131,7 +131,7 @@ public class levels {
 			+"	     #      #\n"
 			+"	     ########\n";
 		 
-		 public static String level10 =
+		/* public static String level10 =
 			 "	  ###  #############\n"
 			+"	 ##@####       #   #\n"
 			+"	 # $$   $$  $ $ ...#\n"
@@ -147,5 +147,5 @@ public class levels {
 			+"	 ##### #       # #.#\n"
 			+"	     # ######### #.#\n"
 			+"	     #           #.#\n"
-			+"	     ###############\n";
+			+"	     ###############\n"; */
 }
