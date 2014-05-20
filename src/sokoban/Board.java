@@ -149,7 +149,6 @@ public class Board extends JPanel {
             
             int key = e.getKeyCode();
 
-
             if (key == KeyEvent.VK_LEFT) {
                 if (checkWallCollision(soko,
                         LEFT_COLLISION)) {
@@ -232,32 +231,64 @@ public class Board extends JPanel {
             
             //choose a level
             switch (key) {
+			case KeyEvent.VK_NUMPAD2:
+				level = levels.level2;
+				restartLevel();
+				break;
 			case KeyEvent.VK_2:
 				level = levels.level2;
+				restartLevel();
+				break;
+			case KeyEvent.VK_NUMPAD3:
+				level = levels.level3;
 				restartLevel();
 				break;
 			case KeyEvent.VK_3:
 				level = levels.level3;
 				restartLevel();
 				break;
+			case KeyEvent.VK_NUMPAD4:
+				level = levels.level4;
+				restartLevel();
+				break;
 			case KeyEvent.VK_4:
 				level = levels.level4;
+				restartLevel();
+				break;
+			case KeyEvent.VK_NUMPAD5:
+				level = levels.level5;
 				restartLevel();
 				break;
 			case KeyEvent.VK_5:
 				level = levels.level5;
 				restartLevel();
 				break;
+			case KeyEvent.VK_NUMPAD6:
+				level = levels.level6;
+				restartLevel();
+				break;
 			case KeyEvent.VK_6:
 				level = levels.level6;
+				restartLevel();
+				break;
+			case KeyEvent.VK_NUMPAD7:
+				level = levels.level7;
 				restartLevel();
 				break;
 			case KeyEvent.VK_7:
 				level = levels.level7;
 				restartLevel();
 				break;
+			case KeyEvent.VK_NUMPAD8:
+				level = levels.level8;
+				restartLevel();
+				break;
 			case KeyEvent.VK_8:
 				level = levels.level8;
+				restartLevel();
+				break;
+			case KeyEvent.VK_NUMPAD9:
+				level = levels.level9;
 				restartLevel();
 				break;
 			case KeyEvent.VK_9:
