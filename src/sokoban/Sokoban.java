@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 public final class Sokoban extends JFrame {
 
-    private final int OFFSET = 30;
+    private final int OFFSET = 80;
 
     public Sokoban() {
         InitUI();
