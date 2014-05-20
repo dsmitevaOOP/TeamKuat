@@ -121,8 +121,9 @@ public class Board extends JPanel {
             }
 
             if (completed) {
-                g.setColor(new Color(0, 0, 0));
-                g.drawString("Completed", 25, 20);
+                restartLevel();
+                //g.setColor(new Color(0, 0, 0));
+                //g.drawString("Completed", 25, 20);
             }
 
         }
