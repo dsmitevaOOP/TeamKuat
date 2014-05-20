@@ -242,7 +242,7 @@ public class Board extends JPanel {
     
     public void undoLastMove()
   	{
-  		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0)
+  		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0 && Direction.size() > 0)
   		{
   			
   			if ((Direction.elementAt(Direction.size() - 1) == left)) {
