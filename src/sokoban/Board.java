@@ -27,7 +27,7 @@ public class Board extends JPanel {
     
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
-    private Vector<Integer> undo = new Vector<Integer>();
+    private int undo = 0;
     
     private Vector<Integer> Direction = new Vector<Integer>();
 
@@ -220,10 +220,10 @@ public class Board extends JPanel {
                 Direction.add(bottom);
 
             } else if (key == KeyEvent.VK_U) {
-            	if (undo.size() < undoNumber) {
+            	if (undo < undoNumber) {
             		
             		undoLastMove();
-                	undo.add(1);
+                	undo++;
 				}
             
             } else if (key == KeyEvent.VK_R) {
@@ -314,25 +314,21 @@ public class Board extends JPanel {
   			if ((Direction.elementAt(Direction.size() - 1) == left)) {
   				
   				undoBaggMove(LEFT_COLLISION);
-  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == right)) {
   				
   				undoBaggMove(RIGHT_COLLISION);
-  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == top)) {
   				
   				undoBaggMove(TOP_COLLISION);
-  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
   				
   				undoBaggMove(BOTTOM_COLLISION);
-  				Direction.remove(Direction.size() - 1);
 			}
   				
   			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
@@ -515,8 +511,6 @@ public class Board extends JPanel {
                         
                     }
                     bag.move(SPACE, 0);
-                    
-                   
                 }
             }
             
@@ -531,13 +525,9 @@ public class Board extends JPanel {
                if (soko.isRightCollision(bag)) {
                     for (int j=0; j < baggs.size(); j++) {
 
-                        Baggage item = (Baggage) baggs.get(j);
-                       
-                       
+                        Baggage item = (Baggage) baggs.get(j);    
                    }
-                    bag.move(-SPACE, 0);
-                    
-                                     
+                    bag.move(-SPACE, 0);                     
                 }
             }
             
@@ -571,7 +561,6 @@ public class Board extends JPanel {
                     for (int j = 0; j < baggs.size(); j++) {
 
                         Baggage item = (Baggage) baggs.get(j);
-                        
                         
                     }
                     bag.move(0, -SPACE);
@@ -610,9 +599,9 @@ public class Board extends JPanel {
         areas.clear();
         baggs.clear();
         walls.clear();
-        Vector<Integer> moveHistorySokoX = new Vector<Integer>();
-        Vector<Integer> moveHistorySokoY = new Vector<Integer>();
-        Vector<Integer> undo = new Vector<Integer>();
+        moveHistorySokoX = new Vector<Integer>();
+        moveHistorySokoY = new Vector<Integer>();
+        undo = 0;
         Direction = new Vector<Integer>();
         initWorld();
         if (completed) {
