@@ -23,8 +23,11 @@ public class Board extends JPanel {
     private final int top = 3;  
     private final int bottom = 4;
     
+    private final int undoNumber = 100000;
+    
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
+    private Vector<Integer> undo = new Vector<Integer>();
     
     private Vector<Integer> Direction = new Vector<Integer>();
 
@@ -217,14 +220,14 @@ public class Board extends JPanel {
                 Direction.add(bottom);
 
             } else if (key == KeyEvent.VK_U) {
-            	undoLastMove();
+            	if (undo.size() < undoNumber) {
+            		
+            		undoLastMove();
+                	undo.add(1);
+				}
             
             } else if (key == KeyEvent.VK_R) {
                 
-             moveHistorySokoX = new Vector<Integer>();
-             moveHistorySokoY = new Vector<Integer>();
-                
-             Direction = new Vector<Integer>();
              
              restartLevel();
             }
@@ -311,21 +314,25 @@ public class Board extends JPanel {
   			if ((Direction.elementAt(Direction.size() - 1) == left)) {
   				
   				undoBaggMove(LEFT_COLLISION);
+  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == right)) {
   				
   				undoBaggMove(RIGHT_COLLISION);
+  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == top)) {
   				
   				undoBaggMove(TOP_COLLISION);
+  				Direction.remove(Direction.size() - 1);
 			}
   			
   			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
   				
   				undoBaggMove(BOTTOM_COLLISION);
+  				Direction.remove(Direction.size() - 1);
 			}
   				
   			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
@@ -603,6 +610,10 @@ public class Board extends JPanel {
         areas.clear();
         baggs.clear();
         walls.clear();
+        Vector<Integer> moveHistorySokoX = new Vector<Integer>();
+        Vector<Integer> moveHistorySokoY = new Vector<Integer>();
+        Vector<Integer> undo = new Vector<Integer>();
+        Direction = new Vector<Integer>();
         initWorld();
         if (completed) {
             completed = false;
