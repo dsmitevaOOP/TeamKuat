@@ -237,6 +237,44 @@ public class Board extends JPanel {
              
              restartLevel();
             }
+            
+            //choose a level
+            switch (key) {
+			case KeyEvent.VK_2:
+				level = levels.level2;
+				restartLevel();
+				break;
+			case KeyEvent.VK_3:
+				level = levels.level3;
+				restartLevel();
+				break;
+			case KeyEvent.VK_4:
+				level = levels.level4;
+				restartLevel();
+				break;
+			case KeyEvent.VK_5:
+				level = levels.level5;
+				restartLevel();
+				break;
+			case KeyEvent.VK_6:
+				level = levels.level6;
+				restartLevel();
+				break;
+			case KeyEvent.VK_7:
+				level = levels.level7;
+				restartLevel();
+				break;
+			case KeyEvent.VK_8:
+				level = levels.level8;
+				restartLevel();
+				break;
+			case KeyEvent.VK_9:
+				level = levels.level9;
+				restartLevel();
+				break;
+			default:
+				break;
+			}
 
             repaint();
         }
