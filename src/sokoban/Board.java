@@ -25,13 +25,14 @@ public class Board extends JPanel {
     private final int bottom = 4;
     
     private final int undoNumber = 10;
+    private int undo = 0;
     
     private boolean madeMove = false;
+    private Vector<Boolean> movedBox = new Vector<Boolean>();
     
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
-    private int undo = 0;
-    
+
     private Vector<Integer> Direction = new Vector<Integer>();
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
@@ -183,6 +184,7 @@ public class Board extends JPanel {
 
                 soko.move(-SPACE, 0);
                 madeMove = true;
+                movedBox.add(false);
                 
                 moveHistorySokoX.add(SPACE);
                 moveHistorySokoY.add(0);
@@ -201,6 +203,7 @@ public class Board extends JPanel {
 
                 soko.move(SPACE, 0);
                 madeMove = true;
+                movedBox.add(false);
                 
                 moveHistorySokoX.add(- SPACE);
                 moveHistorySokoY.add(0);
@@ -219,6 +222,7 @@ public class Board extends JPanel {
 
                 soko.move(0, -SPACE);
                 madeMove = true;
+                movedBox.add(false);
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(SPACE);
@@ -237,6 +241,7 @@ public class Board extends JPanel {
 
                 soko.move(0, SPACE);
                 madeMove = true;
+                movedBox.add(false);
                 
                 moveHistorySokoX.add(0);
                 moveHistorySokoY.add(-SPACE);
@@ -259,8 +264,8 @@ public class Board extends JPanel {
             //choose a level
             switch (key) {
 			case KeyEvent.VK_NUMPAD2:
-				level = levels.level2;
-				restartLevel();
+					level = levels.level2;
+					restartLevel();
 				break;
 			case KeyEvent.VK_2:
 				level = levels.level2;
@@ -338,31 +343,40 @@ public class Board extends JPanel {
     
     public void undoLastMove()
   	{
-  		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0 && Direction.size() > 0)
-  		{
+  		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0 && Direction.size() > 0) {
   			
-  			if ((Direction.elementAt(Direction.size() - 1) == left)) {
-  				
-  				undoBaggMove(LEFT_COLLISION);
-			}
+  			//if (movedBox.size() > 0 && (movedBox.elementAt(movedBox.size() - 1)) == true){
+				
   			
-  			if ((Direction.elementAt(Direction.size() - 1) == right)) {
-  				
-  				undoBaggMove(RIGHT_COLLISION);
-			}
+	  			if ((Direction.elementAt(Direction.size() - 1) == left)) {
+	  				
+	  				undoBaggMove(LEFT_COLLISION);
+				}
+	  			
+	  			if ((Direction.elementAt(Direction.size() - 1) == right)) {
+	  				
+	  				undoBaggMove(RIGHT_COLLISION);
+				}
+	  			
+	  			if ((Direction.elementAt(Direction.size() - 1) == top)) {
+	  				
+	  				undoBaggMove(TOP_COLLISION);
+				}
+	  			
+	  			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
+	  				
+	  				undoBaggMove(BOTTOM_COLLISION);
+				}
+	  				
+	  			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
+	  					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
+  			//}
   			
-  			if ((Direction.elementAt(Direction.size() - 1) == top)) {
-  				
-  				undoBaggMove(TOP_COLLISION);
-			}
-  			
-  			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
-  				
-  				undoBaggMove(BOTTOM_COLLISION);
-			}
-  				
-  			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
-  					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
+  			//else if (movedBox.size() > 0 && (movedBox.elementAt(movedBox.size() - 1)) == false){ 
+				
+  				//soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
+	  					//moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
+			//}
   			
   		}
   	}
@@ -433,12 +447,12 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
+                    movedBox.add(true);
                     bag.move(-SPACE, 0);
                     
                     isCompleted();
                 }
             }
-            
             return false;
 
         } else if (type == RIGHT_COLLISION) {
@@ -460,12 +474,12 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
+                    movedBox.add(true);
                     bag.move(SPACE, 0);
                     
                     isCompleted();                   
                 }
             }
-          
             return false;
 
         } else if (type == TOP_COLLISION) {
@@ -487,12 +501,12 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
+                    movedBox.add(true);
                     bag.move(0, -SPACE);
                   
                     isCompleted();
                 }
             }
-            
             return false;
 
         } else if (type == BOTTOM_COLLISION) {
@@ -514,13 +528,13 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
+                    movedBox.add(true);
                     bag.move(0, SPACE);
                   
                     isCompleted();
                 }
             }
         }
-        
         return false;
     }
   
@@ -631,8 +645,9 @@ public class Board extends JPanel {
         walls.clear();
         moveHistorySokoX = new Vector<Integer>();
         moveHistorySokoY = new Vector<Integer>();
-        undo = 0;
         Direction = new Vector<Integer>();
+        movedBox = new Vector<Boolean>();
+        undo = 0;
         initWorld();
         if (completed) {
             completed = false;
