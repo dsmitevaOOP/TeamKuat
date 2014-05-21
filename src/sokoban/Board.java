@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel {
 
-	private final int OFFSET = 40;
+	private final int OFFSET = 35;
 	private final int SPACE = 20;
 	private final int LEFT_COLLISION = 1;
 	private final int RIGHT_COLLISION = 2;
@@ -137,9 +137,10 @@ public class Board extends JPanel {
 				g.drawString(
 						"\u25B2 move up key, \u25BC move down key, \u25C4 move left key, \u25BA move right key",
 						150, 420);
-				g.drawString("To reset level press \"r\" key", 150, 440);
-				g.drawString("To undo last move press \"u\" key", 150, 460);
-				g.drawString("To continue press Enter", 150, 480);
+				g.drawString("To select level press 1 - 9 key", 150, 440);
+				g.drawString("To reset level press \"r\" key", 150, 460);
+				g.drawString("To undo last move press \"u\" key", 150, 480);
+				g.drawString("To continue press Enter", 150, 500);
 
 			}
 			// if level is done, get next level and restart.
