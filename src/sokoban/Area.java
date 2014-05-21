@@ -7,12 +7,12 @@ import javax.swing.ImageIcon;
 
 public class Area extends Actor {
 
-    public Area(int x, int y) {
-        super(x, y);
+	public Area(int x, int y) {
+		super(x, y);
 
-        URL loc = this.getClass().getResource("dot.png");
-        ImageIcon iia = new ImageIcon(loc);
-        Image image = iia.getImage();
-        this.setImage(image);
-    }
+		URL loc = this.getClass().getResource("dot.png");
+		ImageIcon iia = new ImageIcon(loc);
+		Image image = iia.getImage();
+		this.setImage(image);
+	}
 }
