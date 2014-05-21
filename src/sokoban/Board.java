@@ -126,6 +126,20 @@ public class Board extends JPanel {
                 g.drawImage(item.getImage(), item.x(), item.y(), this);
             }
 
+	
+	 if (lev == 0) {
+			g.setColor(new Color(250, 240, 170));
+			g.setColor(new Color(0, 0, 0));
+			g.setFont(new Font("default", Font.BOLD, 16));
+			g.drawString("To move worker press arrow keys:", 150, 400);
+			g.drawString(
+						"↑ move up key, ↓ move down key, ← move left key, → move right key",
+						150, 420);
+			g.drawString("To reset level press \"r\" key", 150, 440);
+			g.drawString("To undo last move press \"u\" key", 150, 460);
+			g.drawString("To continue press Enter", 150, 480);
+
+			}	
             if (completed) {
             	nextLevel(level);
                 restartLevel();
