@@ -133,8 +133,7 @@ public class Board extends JPanel {
 			g.setColor(new Color(0, 0, 0));
 			g.setFont(new Font("default", Font.BOLD, 16));
 			g.drawString("To move worker press arrow keys:", 150, 400);
-			g.drawString(
-						"↑ move up key, ↓ move down key, ← move left key, → move right key",
+			g.drawString("\u25B2 move up key, \u25BC“ move down key, \u25C4 move left key, \u25BA’ move right key",
 						150, 420);
 			g.drawString("To reset level press \"r\" key", 150, 440);
 			g.drawString("To undo last move press \"u\" key", 150, 460);
