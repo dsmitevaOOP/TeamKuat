@@ -41,7 +41,8 @@ public class Board extends JPanel {
     private int h = 0;
     private boolean completed = false;
     
-    private String level = levels.level1;
+    private String level = levels.WelcomeToSocoban;
+    int lev =0;
            
 
     public Board() {
