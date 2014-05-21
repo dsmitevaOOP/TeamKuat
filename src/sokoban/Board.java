@@ -32,7 +32,7 @@ public class Board extends JPanel {
 	private boolean madeMove = false;
 
 	private Vector<Integer> moveHistorySokoX = new Vector<Integer;
-	private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
+	private Vector<Integer> moveHistorySokoY = new Vector<Integer>(); 
 	private Vector<Integer> Direction = new Vector<Integer>();
 
 	private ArrayList<Wall> walls = new ArrayList<Wall>();
