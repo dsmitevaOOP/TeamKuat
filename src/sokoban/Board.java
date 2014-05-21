@@ -306,6 +306,11 @@ public class Board extends JPanel {
 				level = levels.level9;
 				restartLevel();
 				break;
+			case KeyEvent.VK_ENTER:
+				level = levels.level1;
+				lev = 1;
+				restartLevel();
+				break;
 			default:
 				break;
 			}
