@@ -42,6 +42,7 @@ public class Board extends JPanel {
     private int h = 0;
     private boolean completed = false;
     
+    //1-st load welcome screen, lev=0 check for welcome screen
     private String level = levels.WelcomeToSocoban;
     int lev =0;
            
@@ -127,7 +128,7 @@ public class Board extends JPanel {
                 g.drawImage(item.getImage(), item.x(), item.y(), this);
             }
 
-	
+	//set welcomescreen
 	 if (lev == 0) {
 			g.setColor(new Color(250, 240, 170));
 			g.setColor(new Color(0, 0, 0));
@@ -140,6 +141,7 @@ public class Board extends JPanel {
 			g.drawString("To continue press Enter", 150, 480);
 
 			}	
+            //if level is done, get next level and restart.
             if (completed) {
             	nextLevel(level);
                 restartLevel();
@@ -320,6 +322,7 @@ public class Board extends JPanel {
 				level = levels.level9;
 				restartLevel();
 				break;
+			//from start screen to level 1
 			case KeyEvent.VK_ENTER:
 				level = levels.level1;
 				lev = 1;
