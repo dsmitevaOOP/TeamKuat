@@ -31,7 +31,7 @@ public class Board extends JPanel {
 	private int undo = 0;
 	private boolean madeMove = false;
 
-	private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
+	private Vector<Integer> moveHistorySokoX = new Vector<Integer;
 	private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
 	private Vector<Integer> Direction = new Vector<Integer>();
 
