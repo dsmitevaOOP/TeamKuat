@@ -261,6 +261,14 @@ public class Board extends JPanel {
 
         //choose a level
         switch (key) {
+        case KeyEvent.VK_NUMPAD1:
+			level = levels.level1;
+			restartLevel();
+		break;
+	case KeyEvent.VK_1:
+		level = levels.level1;
+		restartLevel();
+		break;
 		case KeyEvent.VK_NUMPAD2:
 				level = levels.level2;
 				restartLevel();
