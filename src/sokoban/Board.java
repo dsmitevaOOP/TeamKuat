@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel { 
 
-    private final int OFFSET = 30;
+    private final int OFFSET = 40;
     private final int SPACE = 20;
     private final int LEFT_COLLISION = 1;
     private final int RIGHT_COLLISION = 2;
@@ -24,28 +24,29 @@ public class Board extends JPanel {
     private final int top = 3;  
     private final int bottom = 4;
     
-    private final int undoNumber = 10;
+    private final int undoNumber = 100;
     private int undo = 0;
-    
     private boolean madeMove = false;
-    private Vector<Boolean> movedBox = new Vector<Boolean>();
     
     private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
     private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
-
     private Vector<Integer> Direction = new Vector<Integer>();
 
     private ArrayList<Wall> walls = new ArrayList<Wall>();
     private ArrayList<Baggage> baggs = new ArrayList<Baggage>();
     private ArrayList<Area> areas = new ArrayList<Area>();
+   
     private Player soko;
+   
     private int w = 0;
     private int h = 0;
+    
     private boolean completed = false;
     
-    //1-st load welcome screen, lev=0 check for welcome screen
+    //Loads welcome screen
     private String level = levels.WelcomeToSocoban;
-    int lev =0;
+    private String end = levels.EndScreen;
+    int lev = 0;
            
 
     public Board() {
@@ -162,225 +163,257 @@ public class Board extends JPanel {
     class TAdapter extends KeyAdapter {
 
 
-		@Override
-        public void keyPressed(KeyEvent e) {
+	@Override
+    public void keyPressed(KeyEvent e) {
 
-            if (completed) {
+        if (completed) {
+            return;
+        }
+
+        
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            if (checkWallCollision(soko,
+                    LEFT_COLLISION)) {
                 return;
             }
 
+            if (checkBagCollision(LEFT_COLLISION)) {
+                return;
+            }
+
+            soko.move(-SPACE, 0);
+            madeMove = true;
             
-            int key = e.getKeyCode();
+            moveHistorySokoX.add(SPACE);
+            moveHistorySokoY.add(0);
+            Direction.add(left);
 
-            if (key == KeyEvent.VK_LEFT) {
-                if (checkWallCollision(soko,
-                        LEFT_COLLISION)) {
-                    return;
-                }
+        } else if (key == KeyEvent.VK_RIGHT) {
 
-                if (checkBagCollision(LEFT_COLLISION)) {
-                    return;
-                }
+            if (checkWallCollision(soko,
+                    RIGHT_COLLISION)) {
+                return;
+            }
 
-                soko.move(-SPACE, 0);
-                madeMove = true;
-                movedBox.add(false);
-                
-                moveHistorySokoX.add(SPACE);
-                moveHistorySokoY.add(0);
-                Direction.add(left);
+            if (checkBagCollision(RIGHT_COLLISION)) {
+                return;
+            }    
 
-            } else if (key == KeyEvent.VK_RIGHT) {
-
-                if (checkWallCollision(soko,
-                        RIGHT_COLLISION)) {
-                    return;
-                }
-
-                if (checkBagCollision(RIGHT_COLLISION)) {
-                    return;
-                }
-
-                soko.move(SPACE, 0);
-                madeMove = true;
-                movedBox.add(false);
-                
-                moveHistorySokoX.add(- SPACE);
-                moveHistorySokoY.add(0);
-                Direction.add(right);
-
-            } else if (key == KeyEvent.VK_UP) {
-
-                if (checkWallCollision(soko,
-                        TOP_COLLISION)) {
-                    return;
-                }
-
-                if (checkBagCollision(TOP_COLLISION)) {
-                    return;
-                }
-
-                soko.move(0, -SPACE);
-                madeMove = true;
-                movedBox.add(false);
-                
-                moveHistorySokoX.add(0);
-                moveHistorySokoY.add(SPACE);
-                Direction.add(top);
-
-            } else if (key == KeyEvent.VK_DOWN) {
-
-                if (checkWallCollision(soko,
-                        BOTTOM_COLLISION)) {
-                    return;
-                }
-
-                if (checkBagCollision(BOTTOM_COLLISION)) {
-                    return;
-                }
-
-                soko.move(0, SPACE);
-                madeMove = true;
-                movedBox.add(false);
-                
-                moveHistorySokoX.add(0);
-                moveHistorySokoY.add(-SPACE);
-                Direction.add(bottom);
-
-            } else if (key == KeyEvent.VK_U) {
-            	if (undo < undoNumber && madeMove) {
-            		
-            		madeMove = false;
-            		undoLastMove();
-                	undo++;
-				}
+            soko.move(SPACE, 0);
+            madeMove = true;
             
-            } else if (key == KeyEvent.VK_R) {
-                
-             
-             restartLevel();
+            moveHistorySokoX.add(- SPACE);
+            moveHistorySokoY.add(0);
+            Direction.add(right);
+
+        } else if (key == KeyEvent.VK_UP) {
+
+            if (checkWallCollision(soko,
+                    TOP_COLLISION)) {
+                return;
+            }
+
+            if (checkBagCollision(TOP_COLLISION)) {
+                return;
+            }
+
+            soko.move(0, -SPACE);
+            madeMove = true;
+            
+            moveHistorySokoX.add(0);
+            moveHistorySokoY.add(SPACE);
+            Direction.add(top);
+
+        } else if (key == KeyEvent.VK_DOWN) {
+
+            if (checkWallCollision(soko,
+                    BOTTOM_COLLISION)) {
+                return;
+            }
+
+            if (checkBagCollision(BOTTOM_COLLISION)) {
+                return;
             }
             
-            //choose a level
-            switch (key) {
-			case KeyEvent.VK_NUMPAD2:
-					level = levels.level2;
-					restartLevel();
-				break;
-			case KeyEvent.VK_2:
+            soko.move(0, SPACE);
+            madeMove = true;
+            
+            moveHistorySokoX.add(0);
+            moveHistorySokoY.add(-SPACE);
+            Direction.add(bottom);
+			
+		}else if (key == KeyEvent.VK_U) {
+        	if (undo < undoNumber && madeMove) {
+        		
+        		madeMove = false;
+        		undoLastMove();
+            	undo++;
+			}
+        
+        } else if (key == KeyEvent.VK_R) {
+            
+         
+        	restartLevel();
+         
+        }
+
+        //choose a level
+        switch (key) {
+		case KeyEvent.VK_NUMPAD2:
 				level = levels.level2;
 				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD3:
-				level = levels.level3;
-				restartLevel();
-				break;
-			case KeyEvent.VK_3:
-				level = levels.level3;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD4:
-				level = levels.level4;
-				restartLevel();
-				break;
-			case KeyEvent.VK_4:
-				level = levels.level4;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD5:
-				level = levels.level5;
-				restartLevel();
-				break;
-			case KeyEvent.VK_5:
-				level = levels.level5;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD6:
-				level = levels.level6;
-				restartLevel();
-				break;
-			case KeyEvent.VK_6:
-				level = levels.level6;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD7:
-				level = levels.level7;
-				restartLevel();
-				break;
-			case KeyEvent.VK_7:
-				level = levels.level7;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD8:
-				level = levels.level8;
-				restartLevel();
-				break;
-			case KeyEvent.VK_8:
-				level = levels.level8;
-				restartLevel();
-				break;
-			case KeyEvent.VK_NUMPAD9:
-				level = levels.level9;
-				restartLevel();
-				break;
-			case KeyEvent.VK_9:
-				level = levels.level9;
-				restartLevel();
-				break;
-			//from start screen to level 1
-			case KeyEvent.VK_ENTER:
-				level = levels.level1;
-				lev = 1;
-				restartLevel();
-				break;
-			default:
-				break;
-			}
+			break;
+		case KeyEvent.VK_2:
+			level = levels.level2;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD3:
+			level = levels.level3;
+			restartLevel();
+			break;
+		case KeyEvent.VK_3:
+			level = levels.level3;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD4:
+			level = levels.level4;
+			restartLevel();
+			break;
+		case KeyEvent.VK_4:
+			level = levels.level4;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD5:
+			level = levels.level5;
+			restartLevel();
+			break;
+		case KeyEvent.VK_5:
+			level = levels.level5;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD6:
+			level = levels.level6;
+			restartLevel();
+			break;
+		case KeyEvent.VK_6:
+			level = levels.level6;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD7:
+			level = levels.level7;
+			restartLevel();
+			break;
+		case KeyEvent.VK_7:
+			level = levels.level7;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD8:
+			level = levels.level8;
+			restartLevel();
+			break;
+		case KeyEvent.VK_8:
+			level = levels.level8;
+			restartLevel();
+			break;
+		case KeyEvent.VK_NUMPAD9:
+			level = levels.level9;
+			restartLevel();
+			break;
+		case KeyEvent.VK_9:
+			level = levels.level9;
+			restartLevel();
+			break;
+		//from start screen to level 1
+		case KeyEvent.VK_ENTER:
+			level = levels.level1;
+			lev = 1;
+			restartLevel();
+			break;
+		default:
+			break;
+		}
 
-            repaint();
-        }
+        repaint();
     }
+}
     
     public void undoLastMove()
   	{
   		if (moveHistorySokoX.size() > 0 && moveHistorySokoY.size() > 0 && Direction.size() > 0) {
   			
-  			//if (movedBox.size() > 0 && (movedBox.elementAt(movedBox.size() - 1)) == true){
-				
+  			if ((Direction.elementAt(Direction.size() - 1) == left)) {
+  				
+  				undoBaggMove(LEFT_COLLISION);
+			}
   			
-	  			if ((Direction.elementAt(Direction.size() - 1) == left)) {
-	  				
-	  				undoBaggMove(LEFT_COLLISION);
-				}
-	  			
-	  			if ((Direction.elementAt(Direction.size() - 1) == right)) {
-	  				
-	  				undoBaggMove(RIGHT_COLLISION);
-				}
-	  			
-	  			if ((Direction.elementAt(Direction.size() - 1) == top)) {
-	  				
-	  				undoBaggMove(TOP_COLLISION);
-				}
-	  			
-	  			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
-	  				
-	  				undoBaggMove(BOTTOM_COLLISION);
-				}
-	  				
-	  			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
-	  					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
-  			//}
+  			if ((Direction.elementAt(Direction.size() - 1) == right)) {
+  				
+  				undoBaggMove(RIGHT_COLLISION);
+			}
   			
-  			//else if (movedBox.size() > 0 && (movedBox.elementAt(movedBox.size() - 1)) == false){ 
-				
-  				//soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
-	  					//moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
-			//}
+  			if ((Direction.elementAt(Direction.size() - 1) == top)) {
+  				
+  				undoBaggMove(TOP_COLLISION);
+			}
   			
+  			if ((Direction.elementAt(Direction.size() - 1) == bottom)) {
+  				
+  				undoBaggMove(BOTTOM_COLLISION);
+			}
+  				
+  			soko.move(moveHistorySokoX.remove(moveHistorySokoX.size() - 1), 
+  					moveHistorySokoY.remove(moveHistorySokoY.size() - 1));
   		}
   	}
+    
+    private void undoBaggMove(int type) {
 
+        if (type == LEFT_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isLeftCollision(bag)) {
+                    bag.move(SPACE, 0);
+                }
+            }
+    
+
+        } else if (type == RIGHT_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+               if (soko.isRightCollision(bag)) {
+                    bag.move(-SPACE, 0);                     
+                }
+            }  
+
+        } else if (type == TOP_COLLISION) {
+
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isTopCollision(bag)) {
+                    bag.move(0, SPACE);
+                }
+            }   
+            
+
+        } else if (type == BOTTOM_COLLISION) {
+        
+            for (int i = 0; i < baggs.size(); i++) {
+
+                Baggage bag = (Baggage) baggs.get(i);
+                if (soko.isBottomCollision(bag)) {
+                    bag.move(0, -SPACE);    
+                }
+            }
+        }   
+    }
+   
     private boolean checkWallCollision(Actor actor, int type) {
 
         if (type == LEFT_COLLISION) {
@@ -447,7 +480,6 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
-                    movedBox.add(true);
                     bag.move(-SPACE, 0);
                     
                     isCompleted();
@@ -474,7 +506,6 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
-                    movedBox.add(true);
                     bag.move(SPACE, 0);
                     
                     isCompleted();                   
@@ -501,7 +532,6 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
-                    movedBox.add(true);
                     bag.move(0, -SPACE);
                   
                     isCompleted();
@@ -528,7 +558,6 @@ public class Board extends JPanel {
                             return true;
                         }
                     }
-                    movedBox.add(true);
                     bag.move(0, SPACE);
                   
                     isCompleted();
@@ -538,84 +567,6 @@ public class Board extends JPanel {
         return false;
     }
   
-
-
-    private void undoBaggMove(int type) {
-
-        if (type == LEFT_COLLISION) {
-
-            for (int i = 0; i < baggs.size(); i++) {
-
-                Baggage bag = (Baggage) baggs.get(i);
-                if (soko.isLeftCollision(bag)) {
-
-                    for (int j=0; j < baggs.size(); j++) {
-                        Baggage item = (Baggage) baggs.get(j);
-                       
-                        
-                    }
-                    bag.move(SPACE, 0);
-                }
-            }
-            
-            
-            
-
-        } else if (type == RIGHT_COLLISION) {
-
-            for (int i = 0; i < baggs.size(); i++) {
-
-                Baggage bag = (Baggage) baggs.get(i);
-               if (soko.isRightCollision(bag)) {
-                    for (int j=0; j < baggs.size(); j++) {
-
-                        Baggage item = (Baggage) baggs.get(j);    
-                   }
-                    bag.move(-SPACE, 0);                     
-                }
-            }
-            
-            
-
-        } else if (type == TOP_COLLISION) {
-
-            for (int i = 0; i < baggs.size(); i++) {
-
-                Baggage bag = (Baggage) baggs.get(i);
-                if (soko.isTopCollision(bag)) {
-                    for (int j = 0; j < baggs.size(); j++) {
-
-                        Baggage item = (Baggage) baggs.get(j);
-                        
-                       
-                    }
-                    bag.move(0, SPACE);
-                    
-                    
-                }
-            }   
-            
-
-        } else if (type == BOTTOM_COLLISION) {
-        
-            for (int i = 0; i < baggs.size(); i++) {
-
-                Baggage bag = (Baggage) baggs.get(i);
-                if (soko.isBottomCollision(bag)) {
-                    for (int j = 0; j < baggs.size(); j++) {
-
-                        Baggage item = (Baggage) baggs.get(j);
-                        
-                    }
-                    bag.move(0, -SPACE);
-                    
-                    
-                }
-            }
-        }   
-    }
-   
-
     public void isCompleted() {
 
         int num = baggs.size();
@@ -646,7 +597,6 @@ public class Board extends JPanel {
         moveHistorySokoX = new Vector<Integer>();
         moveHistorySokoY = new Vector<Integer>();
         Direction = new Vector<Integer>();
-        movedBox = new Vector<Boolean>();
         undo = 0;
         initWorld();
         if (completed) {
