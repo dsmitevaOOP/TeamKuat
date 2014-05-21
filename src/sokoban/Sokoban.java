@@ -23,6 +23,7 @@ public final class Sokoban extends JFrame {
     }
 
     public static void main(String[] args) {
+    	String welcomeString = WelcomeScreen.WelcomeToSocoban;
         Sokoban sokoban = new Sokoban();
         sokoban.setVisible(true);
     }
