@@ -19,7 +19,7 @@ public final class Sokoban extends JFrame {
         setSize(board.getBoardWidth() + OFFSET,
                 board.getBoardHeight() + 2*OFFSET);
         setLocationRelativeTo(null);
-        setTitle("Sokoban");
+        setTitle("Sokoban by team Kuat");
     }
 
     public static void main(String[] args) {
