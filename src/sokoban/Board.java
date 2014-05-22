@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel {
 
-	private final int OFFSET = 35;
+	private final int OFFSET = 45;
 	private final int SPACE = 20;
 	private final int LEFT_COLLISION = 1;
 	private final int RIGHT_COLLISION = 2;
@@ -32,7 +32,7 @@ public class Board extends JPanel {
 	private boolean madeMove = false;
 
 	private Vector<Integer> moveHistorySokoX = new Vector<Integer>();
-	private Vector<Integer> moveHistorySokoY = new Vector<Integer>(); 
+	private Vector<Integer> moveHistorySokoY = new Vector<Integer>();
 	private Vector<Integer> Direction = new Vector<Integer>();
 
 	private ArrayList<Wall> walls = new ArrayList<Wall>();
@@ -141,7 +141,6 @@ public class Board extends JPanel {
 				g.drawString("To reset level press \"r\" key", 150, 460);
 				g.drawString("To undo last move press \"u\" key", 150, 480);
 				g.drawString("To continue press Enter", 150, 500);
-
 			}
 			// if level is done, get next level and restart.
 			if (completed) {
